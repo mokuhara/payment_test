@@ -2,33 +2,23 @@ import {
   createStore
 } from 'vuex'
 
-const state = {
-  specialist: {
-    iconUrl: "",
-    name: "",
-    tag: [],
-    status: "",
-    description: "",
-    createdAt: ""
-  }
-}
+import createPersistedState from 'vuex-persistedstate'
 
-const mutations = {
-  storeSpecialistAttr(state, payload) {
-    Object.keys(state.specialist).map((key) => {
-      if (key === payload.type) {
-        if (payload.data === null || payload.data === undefined) return;
-        state.specialist[key] = payload.data;
-      }
-    })
-  }
-}
+import auth from '@/store/modules/auth'
+import http from '@/store/modules/http'
+import message from '@/store/modules/message'
+import user from '@/store/modules/user'
 
-const actions = {}
 
 export default createStore({
-  state,
-  mutations,
-  actions,
-  modules: {},
+  modules: {
+    auth,
+    http,
+    message,
+    user
+  },
+  plugins: [createPersistedState({
+    key: 'example',
+    storage: window.sessionStorage
+  })]
 })

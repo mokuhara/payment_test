@@ -12,12 +12,19 @@
           <div v-html="compiledMarkdown"></div>
         </div>
       </div>
+      {{ specialist }}
     </div>
   </div>
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { createNamespacedHelpers } from "vuex";
+
+const {
+  mapState: mapStateOfUsers,
+  mapMutations: mapMutationsOfUsers,
+} = createNamespacedHelpers("user");
+
 import marked from "marked";
 import hljs from "highlightjs";
 
@@ -29,12 +36,13 @@ export default {
     };
   },
   computed: {
+    ...mapStateOfUsers(["specialist"]),
     compiledMarkdown() {
       return marked(this.markdownText);
     },
   },
   methods: {
-    ...mapMutations(["storeSpecialistAttr"]),
+    ...mapMutationsOfUsers(["storeSpecialistAttr"]),
     submitData() {
       const payload = {
         type: "description",
@@ -57,9 +65,6 @@ export default {
 <style src="highlightjs/styles/github-gist.css"></style>
 
 <style scoped>
-.container {
-}
-
 .content {
   display: flex;
   width: 600px;
