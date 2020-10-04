@@ -10,7 +10,9 @@
     "express:run": "vue-cli-service express:run"
   },
   "dependencies": {
+    "axios": "^0.20.0",
     "core-js": "^3.6.5",
+    "cors": "^2.8.5",
     "highlight.js": "^10.2.1",
     "highlightjs": "^9.16.2",
     "marked": "^1.2.0",
