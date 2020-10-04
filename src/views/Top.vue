@@ -1,18 +1,13 @@
 <template>
   <div>
     <div class="container">
-      <InputMarkdown />
+      TOP
     </div>
   </div>
 </template>
 
 <script>
-import InputMarkdown from "../components/molecule/InputMarkdown";
-export default {
-  components: {
-    InputMarkdown,
-  },
-};
+export default {};
 </script>
 
 <style scoped></style>

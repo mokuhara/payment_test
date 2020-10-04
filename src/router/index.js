@@ -5,6 +5,7 @@ import Specialists from "@/views/Specialists.vue";
 import Specialist from "@/views/Specialist.vue";
 import PaymentComplete from "@/views/PaymentComplete.vue";
 import Login from "@/views/Login.vue";
+import Smypage from "@/views/Smypage.vue"
 
 import Store from "@/store/index.js";
 
@@ -36,6 +37,11 @@ const routes = [
     path: "/specialist/:id",
     name: "Specialist",
     component: Specialist,
+  },
+  {
+    path: "/mypage/:id/specialist",
+    name: "Smypage",
+    component: Smypage,
   },
 ];
 

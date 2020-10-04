@@ -1,11 +1,11 @@
 const state = {
-  tenant: "",
+  token: "",
   userId: "",
 };
 const mutations = {
   create(state, data) {
     state.token = data.token;
-    state.userId = data.user_id;
+    state.userId = data.userId;
   },
   destroy(state) {
     state.userId = "";
@@ -26,7 +26,10 @@ const actions = {
         root: true,
       }
     )
-      .then((res) => commit("create", res.data))
+      .then((res) => {
+        commit("create", res.data);
+        commit("user/create", res.data, { root: true });
+      })
       .catch((err) => err);
   },
   destroy({ commit, dispatch }, data) {
@@ -43,7 +46,7 @@ const actions = {
       .then((res) => commit("create", res.data))
       .catch((err) => err)
       .finally((res) => commit("destroy")); // eslint-disable-line
-  },
+  }
 };
 
 export default {

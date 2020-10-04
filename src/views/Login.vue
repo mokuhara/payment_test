@@ -30,6 +30,18 @@
 </template>
 
 <script>
+import { createNamespacedHelpers } from "vuex";
+
+const {
+  mapState: mapStateOfAuth,
+  mapActions: mapActionsOfAuth,
+} = createNamespacedHelpers("auth");
+
+const {
+  mapState: mapStateOfUsers,
+  mapActions: mapActionsOfUsers,
+} = createNamespacedHelpers("user");
+
 export default {
   data() {
     return {
@@ -38,8 +50,10 @@ export default {
     };
   },
   methods: {
+    ...mapActionsOfUsers(["get"]),
+    ...mapActionsOfAuth(["create"]),
     login() {
-      this.$store.dispatch("auth/create", {
+      this.create({
         user: {
           email: this.email,
           password: this.password,
@@ -48,18 +62,21 @@ export default {
     },
   },
   computed: {
-    token() {
-      return this.$store.state.auth.token;
-    },
+    ...mapStateOfUsers(["specialist"]),
+    ...mapStateOfAuth(["token"]),
     // errorMessage() {
     //   return this.$store.state.message.error;
     // },
   },
-  created: function() {
+  created() {
     // this.$store.dispatch("message/destroy");
+
     // already logined
-    if (this.$store.state.auth.token) {
+    this.get({ user: {} });
+    if (this.token && this.specialist && this.specialist.description) {
       this.$router.push("/");
+    } else if (this.token && this.specialist && this.specialist.userId) {
+      this.$router.push(`/mypage/${this.specialist.userId}/specialist`);
     }
   },
   watch: {

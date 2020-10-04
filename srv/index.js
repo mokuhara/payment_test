@@ -4,6 +4,8 @@ const cors = require("cors");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
+const jwt = require("jsonwebtoken");
+
 const mongoose = require("mongoose");
 
 const UserList = require("./models/user");
@@ -25,14 +27,61 @@ export default (app, http) => {
   app.use(express.json());
   app.use(cors());
 
-  app.post("/api/v1/auth", (req, res) => {
-    console.log(req.body);
-    const userId = new mongoose.Types.ObjectId();
+  app.post("/api/v1/user", async (req, res) => {
+    const bearToken = req.headers["authorization"];
+    console.log(bearToken);
+    if (bearToken) {
+      const bearer = bearToken.split(" ");
+      const token = bearer[1];
+      jwt.verify(token, "secret", (err, user) => {
+        if (!err) {
+          UserList.findOne({ userId: user.id }, (err, result) => {
+            if (err) throw err;
+            if (result) {
+              return res.json({ ...result["_doc"], token: token });
+            }
+          });
+        }
+      });
+    }
+  });
+
+  app.post("/api/v1/auth", async (req, res) => {
+    //tokenがある場合内容を確認してuser情報を返却
+    const bearToken = req.headers["authorization"];
+    console.log(bearToken);
+    if (bearToken) {
+      const bearer = bearToken.split(" ");
+      const token = bearer[1];
+      jwt.verify(token, "secret", (err, user) => {
+        if (!err) {
+          UserList.findOne({ userId: user.id }, (err, result) => {
+            if (err) throw err;
+            if (result) {
+              return res.json({ ...result["_doc"], token: token });
+            }
+          });
+        }
+      });
+    }
+
+    //tokenがない場合emaiから既存ユーザーか確認。pass一致してればuser情報返す
     const email = req.body.user.email;
-    // const hashedPassword = bcrypt.hashSync(req.body.password, saltRounds);
+    const doc = await UserList.findOne({ email: email });
+    console.log(doc);
+    if (doc && bcrypt.compareSync(req.body.user.password, doc.password)) {
+      const payload = {
+        id: doc.userId,
+        email: email,
+      };
+      const token = jwt.sign(payload, "secret");
+      return res.json({ ...doc["_doc"], token: token });
+    }
+
+    //tokenがないかつ新規ユーザーの場合
+    const userId = new mongoose.Types.ObjectId();
     const status = "preInterview";
     bcrypt.hash(req.body.user.password, saltRounds, (err, hashedPassword) => {
-      console.log(hashedPassword);
       const filter = {
         email,
       };
@@ -54,39 +103,21 @@ export default (app, http) => {
         },
         (err, result) => {
           if (!err) {
-            return res.json({
-              status: "success",
-            });
+            const payload = {
+              id: userId,
+              email: email,
+            };
+            const token = jwt.sign(payload, "secret");
+            return res.json({ ...update, token: token });
           }
           console.error(err);
         }
       );
     });
-
-    // res.send('Got a POST request');
   });
 
   app.delete("/api/v1/auth", (req, res) => {
-    console.log(req);
     console.log(req.body);
     res.send("Got a DELETE request at /user");
   });
-  //
-  // app.get('/foo', (req, res) => {
-  //   res.json({msg: 'foo'});
-  // });
-  //
-  // app.post('/bar', (req, res) => {
-  //   res.json(req.body);
-  // });
-  //
-  // optional support for socket.io
-  //
-  // let io = socketIO(http);
-  // io.on("connection", client => {
-  //   client.on("message", function(data) {
-  //     // do something
-  //   });
-  //   client.emit("message", "Welcome");
-  // });
 };
