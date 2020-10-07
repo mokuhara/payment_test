@@ -1,16 +1,16 @@
 <template>
   <div>
     <div class="container">
-      <InputMarkdown />
+      <SForm />
     </div>
   </div>
 </template>
 
 <script>
-import InputMarkdown from "../components/molecule/InputMarkdown";
+import SForm from "../components/organism/SForm";
 export default {
   components: {
-    InputMarkdown,
+    SForm,
   },
   created() {
     this.$store.dispatch("user/get", {

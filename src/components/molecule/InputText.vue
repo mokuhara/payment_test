@@ -1,55 +1,38 @@
 <template>
   <div>
-    <div class="text">
-      <!-- <p>{{ mtext }}</p> -->
-      <markdown-it-vue
-        class="md-body"
-        :content="mtext"
-        :options="options"
-        style="font-size:10px;width:100wh;"
-      />
+    <div class="container">
+      <div class="title">
+        名前
+      </div>
+      <div class="content">
+        <input type="text" v-model="text" @blur="submitData" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import MarkdownItVue from "markdown-it-vue";
-import "markdown-it-vue/dist/markdown-it-vue.css";
+import { createNamespacedHelpers } from "vuex";
+
+const { mapMutations: mapMutationsOfUsers } = createNamespacedHelpers("user");
 
 export default {
-  components: {
-    MarkdownItVue,
-  },
-  props: {
-    mtext: String,
-  },
   data() {
     return {
-      options: {
-        markdownIt: {
-          linkify: true,
-        },
-        linkAttributes: {
-          attrs: {
-            target: "_self",
-            rel: "noopener",
-          },
-        },
-      },
+      text: "",
     };
+  },
+  methods: {
+    ...mapMutationsOfUsers(["storeSpecialistAttr"]),
+    submitData() {
+      const payload = {
+        type: "name",
+        data: this.text,
+      };
+      this.storeSpecialistAttr(payload);
+    },
   },
 };
 </script>
 
-<style lang="scss" scoped>
-.text {
-  padding: 4px 0;
-  margin: 0;
-  display: flex;
-  text-align: left;
-}
-
-p {
-  margin: 0;
-}
-</style>
+<style scoped></style>

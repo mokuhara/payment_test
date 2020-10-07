@@ -25,7 +25,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .btn {
   display: inline-block;
   width: 50px;

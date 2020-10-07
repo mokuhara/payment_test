@@ -15,16 +15,15 @@
         placeholder="Type to search or add tag"
       >
       </Multiselect>
-      <!-- {{ taggingSelected }} -->
-      <!-- <pre class="language-json"><code>{{ value  }}</code></pre> -->
     </div>
   </div>
 </template>
 
 <script>
 import Multiselect from "vue-multiselect";
+import { createNamespacedHelpers } from "vuex";
+const { mapMutations: mapMutationsOfUsers } = createNamespacedHelpers("user");
 
-import { mapMutations, mapState } from "vuex";
 export default {
   components: {
     Multiselect,
@@ -35,14 +34,8 @@ export default {
       taggingSelected: [],
     };
   },
-  props: {
-    type: String,
-  },
-  computed: {
-    ...mapState(["todo", "memo", "mtMode"]),
-  },
   methods: {
-    ...mapMutations(["storeMTToState"]),
+    ...mapMutationsOfUsers(["storeSpecialistAttr"]),
     addTag(newTag) {
       const tag = {
         name: newTag,
@@ -50,22 +43,20 @@ export default {
       };
       this.taggingOptions.push(tag);
       this.taggingSelected.push(tag);
-      //   this.storeMTToState({
-      //     type: this.type,
-      //     dtype: "tags",
-      //     data: this.taggingSelected,
-      //   });
+      this.storeSpecialistAttr({
+        type: "tags",
+        data: this.taggingSelected,
+      });
     },
     removeTag(removeTag) {
       const removedTags = this.taggingSelected.filter((tag) => {
         return tag.code !== removeTag.code;
       });
       this.taggingSelected = removedTags;
-      //   this.storeMTToState({
-      //     type: this.type,
-      //     dtype: "tags",
-      //     data: removedTags,
-      //   });
+      this.storeSpecialistAttr({
+        type: "tags",
+        data: removedTags,
+      });
     },
   },
 };

@@ -42,6 +42,10 @@ const actions = {
     requests.method = "delete";
     return dispatch("request", requests);
   },
+  async patch({ dispatch }, requests){
+    requests.method = "patch";
+    return dispatch("request", requests);
+  }
 };
 
 export default {

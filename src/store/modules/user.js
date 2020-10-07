@@ -2,8 +2,9 @@ const state = {
   specialist: {
     userId: "",
     iconUrl: "",
+    iconName: "",
     name: "",
-    tag: [],
+    tags: [],
     status: "",
     description: "",
     createdAt: "",
@@ -21,8 +22,9 @@ const mutations = {
   },
   create(state, payload) {
     state.specialist.iconUrl = payload.iconUrl;
+    state.specialist.iconName = payload.iconName;
     state.specialist.name = payload.name;
-    state.specialist.tag = payload.tag;
+    state.specialist.tags = payload.tags;
     state.specialist.status = payload.status;
     state.specialist.description = payload.description;
     state.specialist.createdAt = payload.createdAt;
@@ -47,6 +49,64 @@ const actions = {
       })
       .catch((err) => err);
     // .finally((res) => commit("destroy")); // eslint-disable-line
+  },
+  uploadImage({ commit, dispatch }, data) {
+    dispatch(
+      "http/post",
+      {
+        url: "/api/v1/fileUpload",
+        data,
+      },
+      {
+        root: true,
+      }
+    )
+      .then((res) => {
+        commit("storeSpecialistAttr", {
+          type: "iconUrl",
+          data: res.data.url,
+        });
+        commit("storeSpecialistAttr", {
+          type: "iconName",
+          data: res.data.name,
+        });
+      })
+      .catch((err) => err);
+  },
+  update({ dispatch, commit, state }) {
+    const data = {
+      filter: { userId: state.specialist.userId },
+      update: {
+        iconUrl: state.specialist.iconUrl,
+        iconName: state.specialist.iconName,
+        name: state.specialist.name,
+        tags: state.specialist.tags,
+        status: state.specialist.status,
+        description: state.specialist.description,
+        userId: state.specialist.userId,
+      },
+    };
+    dispatch(
+      "http/patch",
+      {
+        url: "/api/v1/user",
+        data,
+      },
+      {
+        root: true,
+      }
+    )
+      .then((res) => {
+        commit("storeSpecialistAttr", {
+          type: "iconUrl",
+          data: res.data.url,
+        });
+        commit("storeSpecialistAttr", {
+          type: "iconName",
+          data: res.data.name,
+        });
+      })
+      .catch((err) => err);
   },
 };
 
