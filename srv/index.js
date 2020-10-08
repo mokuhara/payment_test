@@ -1,4 +1,5 @@
 import express from "express";
+const request = require("request");
 // import socketIO from "socket.io";
 
 const cors = require("cors");
@@ -12,6 +13,8 @@ const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
 
 const UserList = require("./models/user");
+const Rooms = require("./models/zoom")
+const ZOOM_CONFIG = require("./config/zoom")
 const MONGO_CONFIG = require("./config/mongodb");
 
 const connectOption = {
@@ -58,11 +61,11 @@ export default (app, http) => {
       } else {
         console.log("success file upload");
         delete params.Body;
-        params.Expires = 60 * 60 * 24 * 7 //7days
+        params.Expires = 60 * 60 * 24 * 7; //7days
         s3.getSignedUrl("getObject", params, function (err, url) {
           res.send({
             name: fileName,
-            url: url
+            url: url,
           });
         });
       }
@@ -208,12 +211,47 @@ export default (app, http) => {
   });
 
   app.get("/api/v1/user", (req, res) => {
-    UserList.find().lean().exec((err, result) => {
-      if (!err) {
-        return res.json({
-          result
-        });
+    UserList.find()
+      .lean()
+      .exec((err, result) => {
+        if (!err) {
+          return res.json({
+            result,
+          });
+        }
+      });
+  });
+
+  app.post("/api/v1/createroom", (req, res) => {
+    const userId = req.body.userId;
+    const options = {
+      method: "POST",
+      url: ZOOM_CONFIG.ENDPOINT,
+      headers: {
+        authorization: `Bearer ${ZOOM_CONFIG.TOKEN}`
+      },
+      json: {
+        topic: "Weekly Meeting",
+        type: "2",
+        start_time: "2020-10-27T18:30:00",
+        timezone: "Asia/Tokyo",
+        settings: {
+          use_pmi: "false",
+        },
+      },
+    };
+    request(options, (error, response, body) => {
+      if (error) throw new Error(error);
+      const data = {
+        userId: userId,
+        roomUrl: body.join_url
       }
+      Rooms.create(data, (err, res) => {
+        if (err) return handleError(err);
+      });
+      return res.json({
+        result: body,
+      });
     });
-  })
+  });
 };
