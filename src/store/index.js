@@ -1,4 +1,6 @@
-import { createStore } from "vuex";
+import {
+  createStore
+} from "vuex";
 
 import createPersistedState from "vuex-persistedstate";
 
@@ -8,6 +10,7 @@ import message from "@/store/modules/message";
 import user from "@/store/modules/user";
 import modal from "@/store/modules/modal";
 import zoom from "@/store/modules/zoom";
+import stripe from "@/store/modules/stripe"
 
 export default createStore({
   modules: {
@@ -17,6 +20,7 @@ export default createStore({
     user,
     modal,
     zoom,
+    stripe
   },
   plugins: [
     createPersistedState({

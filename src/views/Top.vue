@@ -3,18 +3,21 @@
     <div class="container">
       <SCardList />
     </div>
-    <hoge />
+    <ZoomButton />
+    <Stripe />
   </div>
 </template>
 
 <script>
 import SCardList from "../components/molecule/SCardList";
-import hoge from "../components/molecule/zoomButton";
+import ZoomButton from "../components/molecule/zoomButton";
+import Stripe from "../components/molecule/Stripe";
 
 export default {
   components: {
     SCardList,
-    hoge,
+    ZoomButton,
+    Stripe,
   },
 };
 </script>

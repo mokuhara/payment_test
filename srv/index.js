@@ -254,4 +254,14 @@ export default (app, http) => {
       });
     });
   });
+
+  const export_func = require("./stripe-exports");
+
+  app.post('/api/vi/stripe/application', async (req, res) => {
+    const result = await export_func.stripe_create_customer(req.body.email);
+    res.json({
+      result: "application plan!"
+    });
+    console.log('Created a customer.');
+  })
 };

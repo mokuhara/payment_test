@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">PaymentComplete</div>
+    <div class="container">お申し込みあざっす！</div>
   </div>
 </template>
 
@@ -8,5 +8,4 @@
 export default {};
 </script>
 
-<style  scoped>
-</style>
+<style scoped></style>
