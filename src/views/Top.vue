@@ -1,13 +1,19 @@
 <template>
   <div>
     <div class="container">
-      TOP
+      <SCardList />
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import SCardList from "../components/molecule/SCardList";
+
+export default {
+  components: {
+    SCardList,
+  },
+};
 </script>
 
 <style scoped></style>

@@ -206,4 +206,14 @@ export default (app, http) => {
       }
     );
   });
+
+  app.get("/api/v1/user", (req, res) => {
+    UserList.find().lean().exec((err, result) => {
+      if (!err) {
+        return res.json({
+          result
+        });
+      }
+    });
+  })
 };
