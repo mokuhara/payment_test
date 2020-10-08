@@ -3,12 +3,16 @@
     <div class="container">
       <div class="wrapper">
         <div class="imageWrapper">
-          <img :src="iconUrl" />
+          <img :src="specialist.iconUrl" />
         </div>
         <div>
-          <p>{{ name }}</p>
+          <p>{{ specialist.name }}</p>
           <div v-html="compiledMarkdown"></div>
         </div>
+      </div>
+      <div>
+        <ZoomButton />
+        <Stripe />
       </div>
     </div>
   </div>
@@ -18,7 +22,18 @@
 import marked from "marked";
 import hljs from "highlightjs";
 
+import ZoomButton from "../molecule/zoomButton";
+import Stripe from "../molecule/Stripe";
+
+import { createNamespacedHelpers } from "vuex";
+
+const { mapState: mapStateOfUsers } = createNamespacedHelpers("user");
+
 export default {
+  components: {
+    ZoomButton,
+    Stripe,
+  },
   props: {
     userId: String,
     iconUrl: String,
@@ -26,9 +41,10 @@ export default {
     description: String,
   },
   computed: {
+    ...mapStateOfUsers(["specialist"]),
     compiledMarkdown() {
-      if (!this.description) return;
-      return marked(this.description);
+      if (!this.specialist.description) return;
+      return marked(this.specialist.description);
     },
   },
   created() {

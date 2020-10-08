@@ -12,7 +12,6 @@
           <div v-html="compiledMarkdown"></div>
         </div>
       </div>
-      {{ specialist }}
     </div>
   </div>
 </template>

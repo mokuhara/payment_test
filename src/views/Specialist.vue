@@ -1,12 +1,19 @@
 <template>
   <div>
-    <div class="container">Specialist</div>
+    <div class="container">
+      <SCard />
+    </div>
   </div>
 </template>
 
 <script>
-export default {};
+import SCard from "../components/molecule/SCard";
+
+export default {
+  components: {
+    SCard,
+  },
+};
 </script>
 
-<style  scoped>
-</style>
+<style scoped></style>

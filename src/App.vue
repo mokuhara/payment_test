@@ -1,8 +1,8 @@
 <template>
   <div id="nav">
     <router-link to="/">Top</router-link> |
-    <router-link to="/specialist">Specialists</router-link> |
-    <router-link to="/payment/complete">PaymentComplete</router-link> |
+    <!-- <router-link to="/specialist">Specialists</router-link> | -->
+    <!-- <router-link to="/payment/complete">PaymentComplete</router-link> | -->
     <router-link
       v-if="specialist && specialist.userId"
       :to="{ name: 'Smypage', params: { id: specialist.userId } }"

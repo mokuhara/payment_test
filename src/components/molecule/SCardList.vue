@@ -3,7 +3,7 @@
     <div class="container">
       <ul class="members">
         <li class="member" v-for="(specialist, index) in lists" :key="index">
-          <SCard
+          <SCardmin
             :userId="specialist.userId"
             :iconUrl="specialist.iconUrl"
             :name="specialist.name"
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import SCard from "../atom/SCard";
+import SCardmin from "../atom/SCardmin";
 import { createNamespacedHelpers } from "vuex";
 
 const {
@@ -31,7 +31,7 @@ export default {
     };
   },
   components: {
-    SCard,
+    SCardmin,
   },
   computed: {
     ...mapStateOfUsers(["specialists"]),
