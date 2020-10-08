@@ -4,8 +4,13 @@
       <div class="title">
         名前
       </div>
-      <div class="content">
-        <input type="text" v-model="text" @blur="submitData" />
+      <div class="contentWrapper">
+        <div class="content">
+          <input type="text" v-model="text" @blur="submitData" />
+        </div>
+        <div>
+          {{ text }}
+        </div>
       </div>
     </div>
   </div>
@@ -35,4 +40,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.contentWrapper {
+  display: flex;
+}
+</style>

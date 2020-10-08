@@ -25,11 +25,13 @@ import InputMarkdown from "../molecule/InputMarkdown";
 import InputText from "../molecule/InputText";
 import ImageUploader from "../molecule/ImageUploader";
 import SubmitButton from "../atom//Button";
+
 // import InputTags from "../molecule/InputTags";
 
 import { createNamespacedHelpers } from "vuex";
 
 const { mapActions: mapActionsOfUsers } = createNamespacedHelpers("user");
+const { mapMutations: mapMutationsOfModal } = createNamespacedHelpers("modal");
 
 export default {
   components: {
@@ -46,15 +48,17 @@ export default {
   },
   methods: {
     ...mapActionsOfUsers(["update"]),
+    ...mapMutationsOfModal(["changeModalStatus"]),
     callback() {
       this.update();
+      this.changeModalStatus(false);
     },
   },
-  created() {
-    this.$store.dispatch("user/get", {
-      user: {},
-    });
-  },
+  //   created() {
+  //     this.$store.dispatch("user/get", {
+  //       user: {},
+  //     });
+  //   },
 };
 </script>
 

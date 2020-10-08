@@ -58,8 +58,12 @@ export default (app, http) => {
       } else {
         console.log("success file upload");
         delete params.Body;
-        s3.getSignedUrl("getObject", params, function(err, url) {
-          res.send({ name: fileName, url: url });
+        params.Expires = 60 * 60 * 24 * 7 //7days
+        s3.getSignedUrl("getObject", params, function (err, url) {
+          res.send({
+            name: fileName,
+            url: url
+          });
         });
       }
     });
@@ -73,8 +77,7 @@ export default (app, http) => {
       const token = bearer[1];
       jwt.verify(token, "secret", (err, user) => {
         if (!err) {
-          UserList.findOne(
-            {
+          UserList.findOne({
               userId: user.id,
             },
             (err, result) => {
@@ -101,8 +104,7 @@ export default (app, http) => {
       const token = bearer[1];
       jwt.verify(token, "secret", (err, user) => {
         if (!err) {
-          UserList.findOne(
-            {
+          UserList.findOne({
               userId: user.id,
             },
             (err, result) => {
@@ -157,8 +159,7 @@ export default (app, http) => {
       };
       UserList.updateOne(
         filter,
-        update,
-        {
+        update, {
           upsert: true,
         },
         (err, result) => {
@@ -189,8 +190,7 @@ export default (app, http) => {
     const update = req.body.update;
     UserList.updateOne(
       filter,
-      update,
-      {
+      update, {
         upsert: true,
       },
       (err, result) => {

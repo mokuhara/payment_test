@@ -8,6 +8,7 @@ import auth from '@/store/modules/auth'
 import http from '@/store/modules/http'
 import message from '@/store/modules/message'
 import user from '@/store/modules/user'
+import modal from '@/store/modules/modal'
 
 
 export default createStore({
@@ -15,7 +16,8 @@ export default createStore({
     auth,
     http,
     message,
-    user
+    user,
+    modal
   },
   plugins: [createPersistedState({
     key: 'example',
