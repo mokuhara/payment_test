@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="container">
-      <div @click="application">
-        こやつのプロフェッショナルサービス受ける
+      <div @click="application" class="btn">
+        契約する
       </div>
-      <div v-if="plan">
+      <div class="plan" v-if="plan">
         {{ plan }}
       </div>
     </div>
@@ -34,4 +34,16 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.btn {
+  display: inline-block;
+  padding: 3px 8px;
+  background-color: rgb(196, 47, 38);
+  color: #fff;
+  border-radius: 3px;
+}
+
+.plan {
+  padding-top: 10px;
+}
+</style>

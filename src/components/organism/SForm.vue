@@ -1,19 +1,19 @@
 <template>
   <div>
     <div class="container">
-      <div>
+      <div class="name block">
         <InputText />
       </div>
-      <div>
+      <div class="icon block">
         <ImageUploader />
       </div>
-      <div>
+      <div class="description block">
         <InputMarkdown />
       </div>
       <div>
         <!-- <InputTags /> -->
       </div>
-      <div>
+      <div class="btn block">
         <SubmitButton :text="text" :callback="callback" />
       </div>
     </div>
@@ -62,4 +62,14 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.block {
+  margin: 10px;
+}
+</style>

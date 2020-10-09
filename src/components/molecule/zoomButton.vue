@@ -1,10 +1,10 @@
 <template>
   <div>
     <div class="container">
-      <div @click="createRoom">
-        こやつと面談したい
+      <div @click="createRoom" class="btn">
+        面談する
       </div>
-      <div v-if="room">
+      <div class="room" v-if="room">
         <a :href="room">zoomURL</a>
       </div>
     </div>
@@ -37,4 +37,15 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.btn {
+  display: inline-block;
+  padding: 5px 12px;
+  background-color: rgb(240, 241, 241);
+  border-radius: 3px;
+}
+
+.room {
+  padding-top: 10px;
+}
+</style>

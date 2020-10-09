@@ -8,7 +8,7 @@
         <div class="content">
           <input type="text" v-model="text" @blur="submitData" />
         </div>
-        <div>
+        <div class="input">
           {{ text }}
         </div>
       </div>
@@ -43,5 +43,17 @@ export default {
 <style scoped>
 .contentWrapper {
   display: flex;
+  padding-left: 100px;
+}
+
+.content input {
+  padding: 5px;
+  border: 1px solid rgb(173, 182, 182);
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
 }
 </style>

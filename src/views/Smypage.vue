@@ -4,7 +4,7 @@
       <div>
         <Sprofile />
       </div>
-      <div @click="openModal">
+      <div class="btn" @click="openModal">
         登録
       </div>
       <div v-if="isOpen">
@@ -51,4 +51,11 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.btn {
+  display: inline-block;
+  padding: 5px 12px;
+  background-color: rgb(240, 241, 241);
+  border-radius: 3px;
+}
+</style>

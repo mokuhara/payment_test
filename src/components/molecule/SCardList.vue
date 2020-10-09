@@ -50,5 +50,10 @@ export default {
 .members {
   list-style: none;
   padding-inline-start: 0;
+  margin: 0 auto;
+}
+
+.member {
+  margin: 15px;
 }
 </style>

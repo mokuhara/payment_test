@@ -1,7 +1,12 @@
 <template>
   <div>
     <div class="container">
-      <SCardList />
+      <div>
+        スペシャリスト一覧
+      </div>
+      <div class="scardWrapper">
+        <SCardList />
+      </div>
     </div>
   </div>
 </template>
@@ -16,4 +21,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.scardWrapper {
+  margin-top: 10px;
+}
+</style>

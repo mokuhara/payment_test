@@ -5,14 +5,23 @@
         <div class="imageWrapper">
           <img :src="specialist.iconUrl" />
         </div>
-        <div>
+        <div class="explainWrapper">
           <p>{{ specialist.name }}</p>
-          <div v-html="compiledMarkdown"></div>
+          <div>
+            説明
+            <div v-html="compiledMarkdown"></div>
+          </div>
         </div>
       </div>
       <div>
-        <ZoomButton />
-        <Stripe />
+        <div class="btnWrapper">
+          <div class="zoomWrapper">
+            <ZoomButton />
+          </div>
+          <div>
+            <Stripe />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -61,11 +70,25 @@ export default {
 <style scoped>
 .wrapper {
   display: flex;
+  padding-left: 20%;
 }
 
 .imageWrapper img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
+}
+
+.explainWrapper {
+  padding-left: 10px;
+}
+
+.btnWrapper {
+  display: flex;
+  padding-left: 60%;
+}
+
+.zoomWrapper {
+  padding-right: 20px;
 }
 </style>

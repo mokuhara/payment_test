@@ -1,6 +1,9 @@
 <template>
   <div>
     <div class="container">
+      <div>
+        画像アップロード
+      </div>
       <div class="uploadWrapper">
         <div
           class="dropArea"
@@ -10,7 +13,7 @@
           @drop.prevent="dropFile"
           :class="{ enter: isEnter }"
         >
-          > ファイルをドラッグ＆ドロップ
+          ファイルをドラッグ＆ドロップ
         </div>
         <div class="uploadImage" v-if="specialist.iconUrl">
           <img :src="specialist.iconUrl" />
@@ -58,22 +61,35 @@ export default {
 </script>
 
 <style scoped>
+
+
+
 .uploadWrapper {
   display: flex;
+  justify-content: center;
 }
 
-.enter {
-  border: 10px solid powderblue;
+.dropArea.enter {
+  border: 3px solid rgba(145, 204, 204, 0.5);
+  background-color: rgba(145, 204, 204, 0.5);
 }
 
 .dropArea {
-  width: 100px;
-  height: 100px;
+  display: flex;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+  border: 3px dotted rgb(240, 241, 241);
+  text-align: center;
+}
+
+.uploadImage {
+  padding-left: 15px;
 }
 
 .uploadImage img {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
 }
 </style>
